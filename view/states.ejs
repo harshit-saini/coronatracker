@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/bootstrap-bundle.css" />
+    <link rel="stylesheet" href="/css/fontawesome-bundle.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Gotu&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <!-- ---- header -->
+    <%- include("_header") %>
+    <div class="container" style="min-height: 100vh;">
+      <h6 class="text-center text-muted mt-3 mt-md-5">
+        please select the state and submit
+      </h6>
+      <div class="container d-flex mt-3 mt-md-5">
+        <select class="form-control mx-1" name="state" id="state">
+          <% for (element in allStatesData) { %>
+          <option style="width: 200px;" value="<%= element  %> "
+            ><%= element %>
+          </option>
+
+          <% } %>
+        </select>
+        <button class="btn btn-primary mx-1" id="submitBtn">Submit</button>
+      </div>
+
+      <!-- card -->
+      <% for(state in allStatesData){ %>
+      <div
+        class="container mt-md-5 mt-3 px-0 d-none card-container"
+        id="<%= state %> "
+      >
+        <div class="card">
+          <div class="card-header">
+            <h1 id="state-heading"><%= state %></h1>
+          </div>
+          <div class="card-body p-0">
+            <table class="table table-dark m-0">
+              <tr>
+                <td><strong class="text-warning"> Total Cases</strong></td>
+                <td><%= allStatesData[state].confirmed %></td>
+              </tr>
+              <tr>
+                <td><strong class="text-success"> Total Recovered</strong></td>
+                <td><%= allStatesData[state].recovered %></td>
+              </tr>
+              <tr>
+                <td><strong class="text-danger"> Total deaths</strong></td>
+                <td><%= allStatesData[state].deaths %></td>
+              </tr>
+            </table>
+          </div>
+          <div class="card-footer">
+            <p>
+                <h3>District Data</h3>
+                <h6 class="text-muted">
+                    confirmed Cases in each district
+                </h6>
+            </p>
+            <div>
+             coming soon...
+            </div>
+                        
+      
+                
+            </div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+
+    <!-- ---- footer -->
+    <%- include("_footer") %>
+  </body>
+  <script>
+    const option = document.getElementById("state");
+    const stateHeading = document.getElementById("state-heading");
+    const submitBtn = document.getElementById("submitBtn");
+    const cardContainer = document.querySelectorAll(".card-container");
+    submitBtn.addEventListener("click", submitBtnClicked);
+    function submitBtnClicked(event) {
+      const state = option.value;
+      console.log(state);
+      console.log(cardContainer);
+      cardContainer.forEach((e) => {
+        e.classList.add("d-none");
+      });
+      const card = document.getElementById(option.value);
+      card.classList.remove("d-none");
+    }
+  </script>
+</html>
